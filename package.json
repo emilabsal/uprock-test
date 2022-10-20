@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "concurrently \"vue-cli-service serve\" \"json-server --watch src/database/auth.json -m ./node_modules/json-server-auth\"",
+    "server": "concurrently \"vue-cli-service serve\" \"node server.js\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
