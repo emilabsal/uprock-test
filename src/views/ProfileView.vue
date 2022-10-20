@@ -272,11 +272,15 @@ export default {
   }
 
   .skills-img {
-    max-width: 10px;
+    max-width: 8px;
   }
 
   .skills-name {
-    width: 30%;
+    width: 35%;
+  }
+
+  .skills-item {
+    gap: 5px;
   }
 }
 </style>

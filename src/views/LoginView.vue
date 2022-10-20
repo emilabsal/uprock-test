@@ -10,7 +10,7 @@
       @click-event="modal.show = false"
     />
     <form class="login" @submit.prevent="submit">
-      <h1 class="login-title">Sign up</h1>
+      <h1 class="login-title">Sign in</h1>
       <input-custom
         class="login-field"
         v-for="(field, index) in fields"
