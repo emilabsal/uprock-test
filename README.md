@@ -1,24 +1,15 @@
 # uprock-test
 
-## Project setup
+## Запустить приложение с сервером
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+npm run dev
 ```
 
-### Compiles and minifies for production
+### Данные для входа
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+логин: admin@admin.com
+пароль: 1234
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
