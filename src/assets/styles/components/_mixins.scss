@@ -1,0 +1,13 @@
+@mixin flex($ai: center, $jc: center) {
+  display: flex;
+  align-items: $ai;
+  justify-content: $jc;
+}
+
+@mixin block() {
+  background-color: $white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 3px 3px 0px 2px $black;
+  border: 3px solid $black;
+}

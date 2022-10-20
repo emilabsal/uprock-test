@@ -1,0 +1,27 @@
+// Imports
+@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fuzzy+Bubbles:wght@400;700&display=swap');
+@import './components/variables';
+@import './components/mixins';
+
+// Font
+@font-face {
+  font-family: 'Schwifty';
+  src: url('@/assets/fonts/get-schwifty.ttf') format('truetype');
+}
+
+// Common
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $mainFont;
+  font-weight: 400;
+  color: $black;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 500px) {
+  * {
+    font-size: 16px;
+  }
+}

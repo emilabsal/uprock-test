@@ -1,11 +1,11 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import './assets/styles.css';
+import './assets/styles/styles.scss';
+import { VueCookieNext } from 'vue-cookie-next';
 import router from './router';
 import store from './store';
-import { VueCookieNext } from 'vue-cookie-next';
 
-VueCookieNext.config({ expire: '7d', secure: '', sameSite: 'Lax' });
+VueCookieNext.config({ expire: '1d' });
 
 const app = createApp(App);
 app.use(router);

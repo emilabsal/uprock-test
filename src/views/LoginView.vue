@@ -1,23 +1,16 @@
 <template>
   <div class="wrapper">
-    <div class="denied" v-if="denied">
-      <button class="denied-close" @click="denied = false">
-        <img src="@/assets/img/close.svg" alt="close" />
-      </button>
-      <img class="denied-gif" src="@/assets/img/denied.gif" alt="denied" />
-      <p class="denied-text">Access denied</p>
-    </div>
-    <div class="denied" v-if="success">
-      <img class="denied-gif" src="@/assets/img/success.gif" alt="denied" />
-      <div class="denied-desc">
-        <p class="denied-text">You have logged in successfully</p>
-        <p class="denied-text">
-          you will be redirected to the main page in a few seconds
-        </p>
-      </div>
-    </div>
+    <modal-custom
+      v-for="(modal, index) in modals"
+      :key="index"
+      :show="modal.show"
+      :close="modal.close"
+      :text="modal.text"
+      :gif="modal.gif"
+      @click-event="modal.show = false"
+    />
     <form class="login" @submit.prevent="submit">
-      <h1 class="login-title">Sign in</h1>
+      <h1 class="login-title">Sign up</h1>
       <input-custom
         class="login-field"
         v-for="(field, index) in fields"
@@ -34,19 +27,19 @@
 
 <script>
 import InputCustom from "@/components/InputCustom.vue";
-// import { mapState } from "vuex";
+import ModalCustom from "@/components/ModalCustom.vue";
 
 export default {
+  name: "LoginView",
   components: {
     InputCustom,
+    ModalCustom,
   },
   data() {
     return {
       search: "",
       emailValue: "",
       passwordValue: "",
-      denied: false,
-      success: false,
       fields: [
         { label: "Email", id: "email", type: "email", vl: "" },
         {
@@ -56,13 +49,26 @@ export default {
           vl: "",
         },
       ],
+      modals: [
+        {
+          show: false,
+          close: true,
+          text: "Access denied",
+          gif: "denied.gif",
+        },
+        {
+          show: false,
+          close: false,
+          text: "You have logged in successfully \n You will be redirected to the main page in a few seconds",
+          gif: "success.gif",
+        },
+      ],
     };
   },
   methods: {
     submit() {
       this.emailValue = this.fields[0].vl;
       this.passwordValue = this.fields[1].vl;
-
       const login = {
         email: this.emailValue,
         password: this.passwordValue,
@@ -72,17 +78,16 @@ export default {
           login,
         })
         .then(() => {
-          this.success = true;
-
-          this.$cookies.setCookie("token", "hello");
+          this.modals[1].show = true;
+          this.$cookie.setCookie("token", this.auth.token);
 
           setTimeout(() => {
-            this.success = false;
+            this.modals[1].show = false;
             this.$router.push("/");
           }, 3000);
         })
         .catch(() => {
-          this.denied = true;
+          this.modals[0].show = true;
           this.fields[0].vl = "";
           this.fields[1].vl = "";
         });
@@ -96,31 +101,28 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/styles/components/_variables.scss";
+@import "@/assets/styles/components/_mixins.scss";
+
 .wrapper {
   width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 100vh;
+  @include flex();
 }
 
 .login {
   padding: 30px 20px;
-  border-radius: 12px;
-  display: flex;
+  @include flex($ai: flex-start);
   flex-direction: column;
-  align-items: flex-start;
   width: 100%;
   max-width: 400px;
-  font-family: "Schwifty", "Fuzzy Bubbles", sans-serif;
 }
 
 .login-title {
   width: 100%;
   text-align: center;
-  color: black;
-  font-weight: 400;
+  color: $black;
   margin-bottom: 20px;
   font-size: 60px;
   letter-spacing: -4px;
@@ -133,60 +135,16 @@ export default {
 
 .login-submit {
   outline: none;
-  background: #12b0c9;
-  color: black;
   width: 100%;
   margin-top: 20px;
   cursor: pointer;
-  border-radius: 20px;
-  font-size: 20px;
-  box-shadow: 3px 3px 0px 2px black;
-  padding: 20px;
-  border: 3px solid #000;
+  @include block();
   transition: 0.15s;
-  font-weight: 400;
+  background-color: $blue;
 }
 
 .login-submit:active {
   transform: translateY(2px);
   box-shadow: 2px 2px 0px 2px black;
-}
-
-.denied-gif {
-  width: 130px;
-}
-
-.denied {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #000;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  border-radius: 20px;
-  background-color: #fff;
-}
-
-.denied-text {
-  font-size: 20px;
-}
-
-.denied-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  outline: none;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-}
-
-.denied-close img {
-  width: 20px;
-  height: 20px;
 }
 </style>
