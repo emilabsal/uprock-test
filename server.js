@@ -2,7 +2,7 @@ const jsonServer = require('json-server');
 const auth = require('json-server-auth');
 
 const app = jsonServer.create();
-const router = jsonServer.router('/database/auth.json');
+const router = jsonServer.router('auth.json');
 
 // /!\ Bind the router db to the app
 app.db = router.db;
